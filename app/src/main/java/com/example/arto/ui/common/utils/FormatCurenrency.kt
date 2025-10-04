@@ -1,4 +1,4 @@
-package com.example.arto.utils
+package com.example.arto.ui.common.utils
 
 import java.text.NumberFormat
 import java.util.Locale

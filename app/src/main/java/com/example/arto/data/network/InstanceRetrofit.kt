@@ -1,7 +1,7 @@
 package com.example.arto.data.network
 
 import com.example.arto.BuildConfig
-import com.example.arto.utils.Constant
+import com.example.arto.ui.common.utils.Constant
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit

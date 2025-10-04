@@ -1,40 +1,32 @@
-package com.example.arto.utils
+package com.example.arto.ui.common.utils
 
 import android.util.Log
 import java.text.SimpleDateFormat
 import java.util.*
 
 object FormatDate {
-    
-    /**
-     * Convert ISO 8601 timestamp to dd-MM-yy format
-     * Input: "2025-09-30T11:57:26.245512+00:00"
-     * Output: "30-09-25"
-     */
+
     fun dateDMY(dateString: String): String {
         return try {
-            Log.d("FormatDate", "Input: $dateString")
-            
+
             // Ambil bagian tanggal saja (sebelum 'T')
             val datePart = dateString.split("T")[0] // "2025-09-30"
-            Log.d("FormatDate", "Date part: $datePart")
-            
+
             // Split berdasarkan '-'
             val parts = datePart.split("-") // ["2025", "09", "30"]
-            
+
             if (parts.size == 3) {
                 val year = parts[0].substring(2) // "25" (ambil 2 digit terakhir)
                 val month = parts[1] // "09"
                 val day = parts[2] // "30"
-                
+
                 val result = "$day-$month-$year" // "30-09-25"
-                Log.d("FormatDate", "Result: $result")
                 return result
             } else {
                 Log.e("FormatDate", "Invalid date format")
                 return "Invalid Date"
             }
-            
+
         } catch (e: Exception) {
             Log.e("FormatDate", "Error: ${e.message}")
             return "Invalid Date"

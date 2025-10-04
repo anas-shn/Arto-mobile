@@ -1,4 +1,4 @@
-package com.example.arto.ui.home
+package com.example.arto.ui.home.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -60,18 +60,105 @@ class HomeViewModel : ViewModel() {
 
                 if (wallets.isNotEmpty()) {
                     _wallets.value = wallets
-                    // FIX: Calculate total balance after data received
                     calculateTotalBalance()
-                    Log.d("HomeViewModel", "Wallets fetched: ${wallets.size}")
                 } else {
                     _error.value = "No wallets found"
                     _totalBalance.value = 0
                 }
 
             } catch (e: Exception) {
-                Log.e("HomeViewModel", "Error fetching wallets", e)
                 _error.value = "Failed to fetch wallets: ${e.message}"
                 _totalBalance.value = 0
+            } finally {
+                _isLoading.value = false
+            }
+        }
+    }
+
+    fun createWallet(
+        name: String,
+        balance: Int,
+        type: String,
+        rekening: Long
+    ) {
+        viewModelScope.launch {
+            try {
+                _isLoading.value = true
+                _error.value = null
+
+                val wallet = WalletItem(
+                    name = name,
+                    balance = balance,
+                    type = type,
+                    rekening = rekening,
+                    user_id = 1
+                )
+
+                walletRepository.createWallet(wallet)
+                fetchWallets()
+//                _createSuccess.value = true
+
+            } catch (e: Exception) {
+                _error.value = "Failed to create wallet: ${e.message}"
+//                _createSuccess.value = false
+            } finally {
+                _isLoading.value = false
+            }
+        }
+    }
+
+    fun updateWallet(
+        id: Int,
+        name: String,
+        balance: Int,
+        type: String,
+        rekening: Long
+    ) {
+        viewModelScope.launch {
+            try {
+                _isLoading.value = true
+                _error.value = null
+
+                val wallet = WalletItem(
+                    id = id,
+                    name = name,
+                    balance = balance,
+                    type = type,
+                    rekening = rekening,
+                    user_id = 1
+                )
+
+                walletRepository.updateWallet(id, wallet)
+                fetchWallets()
+//                _updateSuccess.value = true
+
+            } catch (e: Exception) {
+                _error.value = "Failed to update wallet: ${e.message}"
+//                _updateSuccess.value = false
+            } finally {
+                _isLoading.value = false
+            }
+        }
+    }
+
+    fun deleteWallet(id: Int) {
+        viewModelScope.launch {
+            try {
+                _isLoading.value = true
+                _error.value = null
+
+                val success = walletRepository.deleteWallet(id)
+                if (success) {
+                    fetchWallets()
+//                    _deleteSuccess.value = true
+                } else {
+                    _error.value = "Failed to delete wallet"
+//                    _deleteSuccess.value = false
+                }
+
+            } catch (e: Exception) {
+                _error.value = "Failed to delete wallet: ${e.message}"
+//                _deleteSuccess.value = false
             } finally {
                 _isLoading.value = false
             }
@@ -123,19 +210,16 @@ class HomeViewModel : ViewModel() {
     private fun calculateIncomeOutcome() {
         var totalIncome = 0
         var totalOutcome = 0
-        
+
         _transactions.value?.forEach { transaction ->
             when (transaction.type.lowercase()) {
                 "income" -> totalIncome += transaction.amount
                 "outcome" -> totalOutcome += transaction.amount
             }
         }
-        
+
         _totalIncome.value = totalIncome
         _totalOutcome.value = totalOutcome
-        
-        Log.d("HomeViewModel", "Income calculated: $totalIncome")
-        Log.d("HomeViewModel", "Outcome calculated: $totalOutcome")
     }
 
     // Public functions untuk manual refresh calculations
@@ -144,11 +228,25 @@ class HomeViewModel : ViewModel() {
         calculateIncomeOutcome()
     }
 
+//
+//    fun clearCreateSuccess() {
+//        _createSuccess.value = false
+//    }
+//
+//    fun clearUpdateSuccess() {
+//        _updateSuccess.value = false
+//    }
+//
+//    fun clearDeleteSuccess() {
+//        _deleteSuccess.value = false
+//    }
+
+    fun clearError() {
+        _error.value = null
+    }
+
     fun refreshData() {
-        Log.d("HomeViewModel", "Refreshing all data...")
         fetchWallets()
         fetchTransactions()
     }
 }
-
-

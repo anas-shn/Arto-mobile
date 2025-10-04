@@ -9,6 +9,9 @@
     <string name="title_summary">Summary</string>
     <string name="title_account">Account</string>
     <string name="desc">Mulanya, masyarakat belum mengenal pertukaran karena setiap orang berusaha memenuhi kebutuhannnya dengan usaha sendiri. Manusia berburu jika ia lapar, membuat pakaian sendiri dari bahan-bahan yang sederhana, mencari buah-buahan untuk konsumsi sendiri; singkatnya, apa yang diperolehnya itulah yang dimanfaatkan untuk memenuhi kebutuhannya."</string>
+    <string name="income_transaction">Pemasukan</string>
+    <string name="outcome_transaction">Pengeluaran</string>
+    <string name="title_transaction">Judul Transaksi</string>
 
-                <!-- <string name="app_name">Nama Aplikasi Saya</string> -->
+    <!-- <string name="app_name">Nama Aplikasi Saya</string> -->
 </resources>
