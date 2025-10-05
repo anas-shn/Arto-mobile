@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="4dp"
+    android:elevation="4dp"
+    app:cardCornerRadius="12dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="12dp"
+        android:background="@color/md_theme_primaryFixedDim">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="4dp">
+
+            <TextView
+                android:id="@+id/category_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="#Makan"
+                android:textColor="@color/md_theme_error"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/date_range_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:text="20 Ags - 29 Sep"
+                android:textStyle="bold"
+                android:textSize="12sp"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/budget_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Makan"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/md_theme_onPrimaryContainer"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="12dp">
+
+            <TextView
+                android:id="@+id/tv_current_amount"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Rp1.000.000"
+                android:textColor="@color/md_theme_primary"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_limit_amount"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:text="Rp2.000.000"
+                android:textColor="@color/md_theme_outline"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <com.mckrpk.animatedprogressbar.AnimatedProgressBar
+            android:id="@+id/progress_budget"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:animationDurationInMs="1600"
+            app:animationStyle="snake"
+            app:lineWidth="8dp"
+            app:max="100"
+            app:progress="75"
+            app:progressColor="@color/md_theme_primary"
+            app:progressTipColor="@color/md_theme_secondary"
+            app:progressTipEnabled="true"
+            app:trackColor="@color/md_theme_outline"/>
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

@@ -14,10 +14,10 @@ import com.example.arto.R
 import com.example.arto.data.model.WalletItem
 import com.example.arto.databinding.FragmentHomeBinding
 import com.example.arto.databinding.WalletModalBinding
-import com.example.arto.ui.adapter.TransactionAdapter
 import com.example.arto.ui.home.viewmodel.HomeViewModel
 import com.example.arto.ui.home.adapter.WalletAdapter
 import com.example.arto.ui.common.utils.FormatCurenrency
+import com.example.arto.ui.home.adapter.TransactionAdapter
 import com.example.arto.ui.wallet.helper.WalletBottomSheetHelper
 import com.example.arto.ui.wallet.helper.WalletFormData
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -289,7 +289,7 @@ class HomeFragment : Fragment() {
         binding.homeParent.alpha = 0.5f
 
         // Disable interactions
-        binding.addTrx.isEnabled = false
+//        binding.addTrx.isEnabled = false
         binding.notificationBtn.isEnabled = false
         binding.seeAllWallets.isEnabled = false
         binding.seeAllTransactions.isEnabled = false
@@ -300,7 +300,7 @@ class HomeFragment : Fragment() {
         binding.homeParent.alpha = 1.0f
 
         // Enable interactions
-        binding.addTrx.isEnabled = true
+//        binding.addTrx.isEnabled = true
         binding.notificationBtn.isEnabled = true
         binding.seeAllWallets.isEnabled = true
         binding.seeAllTransactions.isEnabled = true

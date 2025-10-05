@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.arto.databinding.ActivityMainBinding
-import com.example.arto.ui.home.viewmodel.HomeViewModel
 
 class MainActivity : AppCompatActivity() {
 

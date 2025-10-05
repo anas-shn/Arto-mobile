@@ -7,10 +7,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.arto.databinding.TransactionLayoutBinding
-import com.example.arto.utils.FormatCurenrency
 import androidx.recyclerview.widget.ListAdapter
 import com.example.arto.data.model.TransactionItem
-import com.example.arto.utils.FormatDate
+import com.example.arto.ui.common.utils.FormatCurenrency
+import com.example.arto.ui.common.utils.FormatDate
 
 class TransactionAdapter(
     private val onItemClick: (TransactionItem) -> Unit

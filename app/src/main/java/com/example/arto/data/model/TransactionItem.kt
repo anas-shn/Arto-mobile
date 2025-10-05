@@ -16,8 +16,8 @@ data class TransactionItem (
     @SerializedName("type")
     val type: String,
 
-    @SerializedName("category")
-    val category: String,
+    @SerializedName("category_name")
+    val category_name: String,
 
     @SerializedName("user_id")
     val user_id: Int = 0,

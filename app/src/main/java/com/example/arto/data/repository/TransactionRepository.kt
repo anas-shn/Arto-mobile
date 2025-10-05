@@ -15,14 +15,32 @@ class TransactionRepository {
 
             if (response.isSuccessful) {
                 val transactions = response.body() ?: emptyList()
-                Log.d("TransactionRepository", "Successfully fetched ${transactions.size} transactions")
-                return@withContext transactions
+                               return@withContext transactions
             } else {
-                Log.e("TransactionRepository", "Failed to fetch transactions: ${response.code()}")
                 return@withContext emptyList()
             }
         } catch (e: Exception) {
             return@withContext emptyList()
         }
     }
+
+    // CREATE new transaction
+    suspend fun createTransaction(transaction: TransactionItem): Boolean =
+        withContext(Dispatchers.IO) {
+            try {
+
+                val response = apiService.createTransaction(transaction)
+
+                if (response.isSuccessful) {
+                    val createdTransaction = response.body()
+                    return@withContext true
+                } else {
+                    val errorBody = response.errorBody()?.string()
+                    return@withContext false
+                }
+
+            } catch (e: Exception) {
+                return@withContext false
+            }
+        }
 }

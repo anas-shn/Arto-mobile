@@ -22,16 +22,6 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        buildConfigField(
-            "String",
-            "SUPABASE_URL",
-            "\"${properties.getProperty("SUPABASE_URL") ?: ""}\""
-        )
-        buildConfigField(
-            "String",
-            "SUPABASE_KEY",
-            "\"${properties.getProperty("SUPABASE_KEY") ?: ""}\""
-        )
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -75,11 +65,12 @@ dependencies {
     implementation(libs.androidx.cardview)
     implementation(libs.androidx.fragment)
     implementation(libs.androidx.recyclerview)
-
+//implementation("com.google.android.material:material:1.13.0")
 //    retrofit
     implementation("com.squareup.retrofit2:retrofit:3.0.0")
     implementation("com.squareup.retrofit2:converter-gson:3.0.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
+//    implementation(libs.androidx.room.ktx)
 
     // Testing
     testImplementation(libs.junit)

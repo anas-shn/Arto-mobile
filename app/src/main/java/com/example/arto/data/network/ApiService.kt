@@ -15,9 +15,6 @@ interface ApiService {
     @GET("wallets")
     suspend fun getWallets(): Response<List<WalletItem>>
 
-    @GET("transactions")
-    suspend fun getTransactions(): Response<List<TransactionItem>>
-
     // Wallet Endpoints
     @GET("wallets/{id}")
     suspend fun getWalletById(@Path("id") id: Int): Response<WalletItem>
@@ -44,10 +41,20 @@ interface ApiService {
     @PUT("203c3219-5089-405b-8704-3718f7158220/budgets/{id}")
     suspend fun updateBudget(@Path("id") id: Int, @Body budget: BudgetItem): Response<BudgetItem>
 
+    @PUT("2http://localhost:5678/webhook/899eae30-6f34-4b43-a671-4215dc97fecc/{id}/amount")
+    suspend fun updateBudgetAmount(
+        @Path("id") id: Int,
+        @Body amount: Map<String, Int>
+    ): Response<BudgetItem>
+
     @DELETE("203c3219-5089-405b-8704-3718f7158220/budgets/{id}")
     suspend fun deleteBudget(@Path("id") id: Int): Response<Unit>
 
     // Transaction endpoints
+
+    @GET("transactions")
+    suspend fun getTransactions(): Response<List<TransactionItem>>
+
     @POST("transactions")
     suspend fun createTransaction(@Body transaction: TransactionItem): Response<TransactionItem>
 

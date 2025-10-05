@@ -12,6 +12,17 @@
     <string name="income_transaction">Pemasukan</string>
     <string name="outcome_transaction">Pengeluaran</string>
     <string name="title_transaction">Judul Transaksi</string>
+    <string name="save">Simpan</string>
+    <string name="nav_tambah">Tambah</string>
 
+    <string name="error_title_required">Judul wajib diisi</string>
+    <string name="error_amount_invalid">Jumlah tidak valid</string>
+    <string name="error_wallet_required">Pilih wallet terlebih dahulu</string>
+    <string name="saving">Menyimpan…</string>
+    <string name="transaction_saved">Transaksi tersimpan</string>
+        <!-- Validation Messages -->
+    <string name="error_wallet_not_found">Wallet tidak ditemukan</string>
+    <string name="error_insufficient_balance">Saldo tidak cukup! Saldo wallet: Rp %,d</string>
+    
     <!-- <string name="app_name">Nama Aplikasi Saya</string> -->
 </resources>
