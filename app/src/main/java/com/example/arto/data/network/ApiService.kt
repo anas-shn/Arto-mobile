@@ -41,7 +41,7 @@ interface ApiService {
     @PUT("203c3219-5089-405b-8704-3718f7158220/budgets/{id}")
     suspend fun updateBudget(@Path("id") id: Int, @Body budget: BudgetItem): Response<BudgetItem>
 
-    @PUT("2http://localhost:5678/webhook/899eae30-6f34-4b43-a671-4215dc97fecc/{id}/amount")
+    @PUT("899eae30-6f34-4b43-a671-4215dc97fecc/budgets/{id}/amount")
     suspend fun updateBudgetAmount(
         @Path("id") id: Int,
         @Body amount: Map<String, Int>

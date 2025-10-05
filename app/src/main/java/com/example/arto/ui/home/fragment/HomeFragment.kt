@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.arto.R
 import com.example.arto.data.model.WalletItem
@@ -268,14 +269,18 @@ class HomeFragment : Fragment() {
 
     private fun setupClickListeners() {
         // See all wallets - Navigate to wallet list
-        binding.seeAllWallets.setOnClickListener {
-            Toast.makeText(context, "Navigate to Wallet List", Toast.LENGTH_SHORT).show()
-        }
 
         // See all transactions - Navigate to transaction list
         binding.seeAllTransactions.setOnClickListener {
-            Toast.makeText(context, "Navigate to Transaction List", Toast.LENGTH_SHORT).show()
-        }
+            // Navigate to summary with proper pop behavior
+            findNavController().navigate(
+                R.id.navigation_summary,
+                null,
+                androidx.navigation.NavOptions.Builder()
+                    .setLaunchSingleTop(true)
+                    .build()
+            )
+       }
 
 
         // Notification button
@@ -291,7 +296,7 @@ class HomeFragment : Fragment() {
         // Disable interactions
 //        binding.addTrx.isEnabled = false
         binding.notificationBtn.isEnabled = false
-        binding.seeAllWallets.isEnabled = false
+//        binding.seeAllWallets.isEnabled = false
         binding.seeAllTransactions.isEnabled = false
     }
 
@@ -302,7 +307,7 @@ class HomeFragment : Fragment() {
         // Enable interactions
 //        binding.addTrx.isEnabled = true
         binding.notificationBtn.isEnabled = true
-        binding.seeAllWallets.isEnabled = true
+//        binding.seeAllWallets.isEnabled = true
         binding.seeAllTransactions.isEnabled = true
     }
 

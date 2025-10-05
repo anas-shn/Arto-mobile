@@ -19,6 +19,7 @@ cardview = "1.0.0"
 fragment = "1.8.9"
 recyclerview = "1.4.0"
 roomKtx = "2.8.1"
+annotation = "1.9.1"
 #kotlinxSerializationJson = "2.2.20"
 
 [libraries]
@@ -40,6 +41,7 @@ androidx-cardview = { group = "androidx.cardview", name = "cardview", version.re
 androidx-fragment = { group = "androidx.fragment", name = "fragment", version.ref = "fragment" }
 androidx-recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "recyclerview" }
 androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "roomKtx" }
+androidx-annotation = { group = "androidx.annotation", name = "annotation", version.ref = "annotation" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

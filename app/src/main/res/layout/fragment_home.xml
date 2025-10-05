@@ -5,12 +5,16 @@
     android:id="@+id/home_parent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     tools:context=".ui.home.fragment.HomeFragment">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        android:clipToPadding="false"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -141,10 +145,11 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:text="Pengeluaran"
-                            android:textColor="@color/md_theme_error"
+                            android:textColor="@android:color/holo_red_light"
                             android:textSize="14sp"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintWidth_percent="0.5" />
+                            app:layout_constraintWidth_percent="0.5"
+                            tools:ignore="MissingConstraints" />
 
                         <TextView
                             android:id="@+id/outcome_value"
@@ -176,24 +181,25 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="start"
-                    android:text="My Wallet"
+                    android:text="Dompet Saya"
                     android:textColor="@color/md_theme_onSurface"
                     android:textSize="16sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:layout_marginBottom="16dp"/>
 
-                <TextView
-                    android:id="@+id/see_all_wallets"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="?android:attr/selectableItemBackgroundBorderless"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:gravity="end"
-                    android:padding="8dp"
-                    android:text="Lihat Semua"
-                    android:textColor="@color/md_theme_primary"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
+<!--                <TextView-->
+<!--                    android:id="@+id/see_all_wallets"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:background="?android:attr/selectableItemBackgroundBorderless"-->
+<!--                    android:clickable="true"-->
+<!--                    android:focusable="true"-->
+<!--                    android:gravity="end"-->
+<!--                    android:padding="8dp"-->
+<!--                    android:text="Lihat Semua"-->
+<!--                    android:textColor="@color/md_theme_primary"-->
+<!--                    android:textSize="14sp"-->
+<!--                    android:textStyle="bold" />-->
 
             </LinearLayout>
 
