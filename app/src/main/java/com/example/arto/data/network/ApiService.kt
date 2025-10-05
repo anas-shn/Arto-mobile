@@ -1,15 +1,14 @@
 package com.example.arto.data.network
 
+import com.example.arto.data.model.AuthResponse
 import com.example.arto.data.model.BudgetItem
+import com.example.arto.data.model.LoginRequest
+import com.example.arto.data.model.LoginResponse
+import com.example.arto.data.model.RegisterRequest
 import com.example.arto.data.model.TransactionItem
 import com.example.arto.data.model.WalletItem
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.DELETE
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.PUT
-import retrofit2.http.Path
+import retrofit2.http.*
 
 interface ApiService {
     @GET("wallets")
@@ -57,5 +56,13 @@ interface ApiService {
 
     @POST("transactions")
     suspend fun createTransaction(@Body transaction: TransactionItem): Response<TransactionItem>
+
+        // === AUTH ===
+    @POST("login")
+    suspend fun login(@Body request: LoginRequest): Response<List<LoginResponse>>
+
+    @POST("register")
+    suspend fun register(@Body request: RegisterRequest): Response<AuthResponse>
+
 
 }

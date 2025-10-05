@@ -1,27 +1,39 @@
 package com.example.arto.ui.home.viewmodel
 
+import android.app.Application
 import android.util.Log
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.arto.data.local.SessionManager
 import com.example.arto.data.model.TransactionItem
 import com.example.arto.data.model.WalletItem
 import com.example.arto.data.repository.TransactionRepository
 import com.example.arto.data.repository.WalletRepository
 import kotlinx.coroutines.launch
 
-class HomeViewModel : ViewModel() {
+class HomeViewModel(application: Application) : AndroidViewModel(application) {
 
     private val walletRepository = WalletRepository()
     private val transactionRepository = TransactionRepository()
+    private val sessionManager = SessionManager(application)
 
     private val _text = MutableLiveData<String>().apply {
         value = "Welcome Back,"
     }
     val text: LiveData<String> = _text
 
-    // FIX: Ubah ke Double dan remove initial value calculation
+    // Ambil nama dari SessionManager
+    private val _name = MutableLiveData<String>().apply {
+        value = sessionManager.getUserName() ?: "User"
+    }
+    val name: LiveData<String> = _name
+
+    // Ambil user ID dari SessionManager
+    private val userId: Int
+        get() = sessionManager.getUserId()
+
     private val _totalBalance = MutableLiveData<Int>().apply {
         value = 0
     }
@@ -49,13 +61,29 @@ class HomeViewModel : ViewModel() {
     private val _error = MutableLiveData<String?>()
     val error: LiveData<String?> = _error
 
+    companion object {
+        private const val TAG = "HomeViewModel"
+    }
+
+    init {
+        // Load user info saat ViewModel dibuat
+        loadUserInfo()
+    }
+
+    private fun loadUserInfo() {
+        val userName = sessionManager.getUserName()
+        val userEmail = sessionManager.getUserEmail()
+        val userId = sessionManager.getUserId()
+
+        _name.value = userName ?: "User"
+    }
+
     fun fetchWallets() {
         viewModelScope.launch {
             try {
                 _isLoading.value = true
                 _error.value = null
 
-                Log.d("HomeViewModel", "Fetching wallets...")
                 val wallets = walletRepository.getWallets()
 
                 if (wallets.isNotEmpty()) {
@@ -91,16 +119,14 @@ class HomeViewModel : ViewModel() {
                     balance = balance,
                     type = type,
                     rekening = rekening,
-                    user_id = 1
+                    user_id = userId
                 )
 
                 walletRepository.createWallet(wallet)
                 fetchWallets()
-//                _createSuccess.value = true
 
             } catch (e: Exception) {
                 _error.value = "Failed to create wallet: ${e.message}"
-//                _createSuccess.value = false
             } finally {
                 _isLoading.value = false
             }
@@ -125,16 +151,16 @@ class HomeViewModel : ViewModel() {
                     balance = balance,
                     type = type,
                     rekening = rekening,
-                    user_id = 1
+                    user_id = userId
                 )
 
+                Log.d(TAG, "Updating wallet ID: $id")
                 walletRepository.updateWallet(id, wallet)
                 fetchWallets()
-//                _updateSuccess.value = true
 
             } catch (e: Exception) {
+                Log.e(TAG, "Error updating wallet", e)
                 _error.value = "Failed to update wallet: ${e.message}"
-//                _updateSuccess.value = false
             } finally {
                 _isLoading.value = false
             }
@@ -147,18 +173,17 @@ class HomeViewModel : ViewModel() {
                 _isLoading.value = true
                 _error.value = null
 
+                Log.d(TAG, "Deleting wallet ID: $id")
                 val success = walletRepository.deleteWallet(id)
                 if (success) {
                     fetchWallets()
-//                    _deleteSuccess.value = true
                 } else {
                     _error.value = "Failed to delete wallet"
-//                    _deleteSuccess.value = false
                 }
 
             } catch (e: Exception) {
+                Log.e(TAG, "Error deleting wallet", e)
                 _error.value = "Failed to delete wallet: ${e.message}"
-//                _deleteSuccess.value = false
             } finally {
                 _isLoading.value = false
             }
@@ -171,22 +196,22 @@ class HomeViewModel : ViewModel() {
                 _isLoading.value = true
                 _error.value = null
 
-                Log.d("HomeViewModel", "Fetching transactions...")
+                Log.d(TAG, "Fetching transactions for user ID: $userId")
                 val transactions = transactionRepository.getTransactions()
 
                 if (transactions.isNotEmpty()) {
                     _transactions.value = transactions
-                    // FIX: Calculate income/outcome after data received
                     calculateIncomeOutcome()
-                    Log.d("HomeViewModel", "Transactions fetched: ${transactions.size}")
+                    Log.d(TAG, "Transactions fetched: ${transactions.size}")
                 } else {
+                    Log.d(TAG, "No transactions found")
                     _error.value = "No transactions found"
                     _totalIncome.value = 0
                     _totalOutcome.value = 0
                 }
 
             } catch (e: Exception) {
-                Log.e("HomeViewModel", "Error fetching transactions", e)
+                Log.e(TAG, "Error fetching transactions", e)
                 _error.value = "Failed to fetch transactions: ${e.message}"
                 _totalIncome.value = 0
                 _totalOutcome.value = 0
@@ -196,17 +221,14 @@ class HomeViewModel : ViewModel() {
         }
     }
 
-    // FIX: Private function untuk calculate total balance
     private fun calculateTotalBalance() {
         var total = 0
         _wallets.value?.forEach { wallet ->
             total += wallet.balance
         }
         _totalBalance.value = total
-        Log.d("HomeViewModel", "Total balance calculated: $total")
     }
 
-    // FIX: Private function untuk calculate income
     private fun calculateIncomeOutcome() {
         var totalIncome = 0
         var totalOutcome = 0
@@ -220,33 +242,26 @@ class HomeViewModel : ViewModel() {
 
         _totalIncome.value = totalIncome
         _totalOutcome.value = totalOutcome
+        Log.d(TAG, "Income: $totalIncome, Outcome: $totalOutcome")
     }
 
-    // Public functions untuk manual refresh calculations
     fun recalculateAll() {
         calculateTotalBalance()
         calculateIncomeOutcome()
     }
-
-//
-//    fun clearCreateSuccess() {
-//        _createSuccess.value = false
-//    }
-//
-//    fun clearUpdateSuccess() {
-//        _updateSuccess.value = false
-//    }
-//
-//    fun clearDeleteSuccess() {
-//        _deleteSuccess.value = false
-//    }
 
     fun clearError() {
         _error.value = null
     }
 
     fun refreshData() {
+        Log.d(TAG, "Refreshing all data for user ID: $userId")
         fetchWallets()
         fetchTransactions()
+    }
+
+    // Function untuk update nama user (jika dibutuhkan)
+    fun updateUserName(newName: String) {
+        _name.value = newName
     }
 }

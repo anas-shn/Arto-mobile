@@ -39,10 +39,6 @@ android {
 }
 
 dependencies {
-//    api 'com.google.android.material:material:1.1.0-alpha06';
-
-//    implementation(libs.material.v1130)
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
@@ -58,4 +54,10 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+//    retrofit
+    implementation("com.squareup.retrofit2:retrofit:3.0.0")
+    implementation("com.squareup.retrofit2:converter-gson:3.0.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
+
+    implementation("io.github.mckrpk:AnimatedProgressBar:1.0.0")
 }

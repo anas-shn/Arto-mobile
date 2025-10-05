@@ -229,6 +229,11 @@ class HomeFragment : Fragment() {
             }
         }
 
+        // Observe user name
+        homeViewModel.name.observe(viewLifecycleOwner) { name ->
+            binding.nameUser.text = name
+        }
+
         // Welcome text
         homeViewModel.text.observe(viewLifecycleOwner) { text ->
             binding.welcomeText.text = text

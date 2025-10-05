@@ -98,9 +98,8 @@ class WalletProviderAdapter(
                 root.setCardBackgroundColor(backgroundColor)
 
                 root.setOnClickListener {
-                    Log.d("WalletProviderAdapter", "Provider clicked: ${provider.name}")
                     val oldPosition = selectedPosition
-                    selectedPosition = bindingAdapterPosition
+                    selectedPosition = adapterPosition
 
                     if (oldPosition != -1 && oldPosition != selectedPosition) {
                         notifyItemChanged(oldPosition)

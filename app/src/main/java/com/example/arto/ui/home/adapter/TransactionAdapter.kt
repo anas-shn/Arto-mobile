@@ -28,7 +28,6 @@ class TransactionAdapter(
     }
 
     override fun onBindViewHolder(holder: TransactionViewHolder, position: Int) {
-        Log.d("TransactionAdapter", "Binding item at position $position")
         holder.bind(getItem(position))
     }
 
