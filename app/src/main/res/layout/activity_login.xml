@@ -5,93 +5,125 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F5F5"
+    android:background="#F8F8F5"
     tools:context=".LoginActivity">
 
-    <!-- Judul Halaman -->
-    <TextView
-        android:id="@+id/tvTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Selamat Datang"
-        android:textSize="32sp"
-        android:textStyle="bold"
-        android:textColor="#333333"
-        android:gravity="center"
-        android:layout_marginTop="64dp"
+    <ImageView
+        android:id="@+id/imgIllustration"
+        android:layout_width="280dp"
+        android:layout_height="219dp"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/awal"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- CardView sebagai container input untuk tampilan yang lebih rapi (Material Design) -->
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardLogin"
+    <!-- Judul -->
+    <TextView
+        android:id="@+id/tvTitleLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Selamat Datang"
+        android:textColor="#1C1C1C"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginTop="24dp"
+        app:layout_constraintTop_toBottomOf="@id/imgIllustration"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+
+    <!-- Deskripsi -->
+    <TextView
+        android:id="@+id/tvDescription"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        app:cardCornerRadius="16dp"
-        app:cardElevation="12dp"
-        app:layout_constraintTop_toBottomOf="@id/tvTitle"
+        android:text="Masa depan finansialmu dibuat di hari ini, bukan besok"
+        android:textColor="#666666"
+        android:textSize="14sp"
+        android:gravity="center"
+        android:layout_marginTop="8dp"
+        android:layout_marginHorizontal="40dp"
+        app:layout_constraintTop_toBottomOf="@id/tvTitleLogin"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_bias="0.3"
-        android:padding="24dp">
+        app:layout_constraintEnd_toEndOf="parent" />
 
-        <LinearLayout
+    <!-- Input Nama -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayoutNama"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginHorizontal="40dp"
+        app:startIconDrawable="@drawable/baseline_person_24"
+        app:layout_constraintTop_toBottomOf="@id/tvDescription"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etNama"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="20dp">
+            android:hint="Nama"
+            android:inputType="textPersonName"
+            android:padding="14dp"
+            android:textColor="#000" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- Input Username menggunakan TextInputLayout (rekomendasi Google untuk input) -->
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Nama"
-                android:layout_marginBottom="16dp"
-                app:startIconDrawable="@drawable/baseline_person_24">
+    <!-- Input Password -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayoutPassword"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="40dp"
+        app:startIconDrawable="@drawable/baseline_lock_24"
+        app:layout_constraintTop_toBottomOf="@id/textInputLayoutNama"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etNama"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textEmailAddress" />
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:padding="14dp"
+            android:textColor="#000" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-            </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- Input Password menggunakan TextInputLayout dengan toggle visibility -->
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Password"
-                app:startIconDrawable="@drawable/baseline_lock_24"
-                app:endIconMode="password_toggle"
-                android:layout_marginBottom="24dp">
+    <!-- Tombol Registrasi -->
+    <Button
+        android:id="@+id/btnLogin"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:layout_marginHorizontal="40dp"
+        android:backgroundTint="#486E4B"
+        android:text="LOGIN"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        android:paddingVertical="12dp"
+        app:layout_constraintTop_toBottomOf="@id/textInputLayoutPassword"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etPassword"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textPassword" />
 
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <!-- Tombol Login -->
-            <Button
-                android:id="@+id/btnLogin"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="LOGIN"
-                android:padding="12dp"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:cornerRadius="8dp" />
-
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
+    <TextView
+        android:id="@+id/tvregisterlink"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Belum punya akun? Registrasi!"
+        android:textColor="#3F51B5"
+        android:textSize="14sp"
+        android:gravity="center"
+        android:layout_marginTop="8dp"
+        android:layout_marginHorizontal="40dp"
+        app:layout_constraintTop_toBottomOf="@id/btnLogin"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

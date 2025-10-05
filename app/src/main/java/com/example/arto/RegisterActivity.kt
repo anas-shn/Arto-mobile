@@ -1,7 +1,9 @@
 package com.example.arto
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -21,6 +23,7 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var etPassword: TextInputEditText
     private lateinit var etKonfirmasiPassword: TextInputEditText
     private lateinit var btnRegister: Button
+    private lateinit var tvLoginLink: TextView
 
     private lateinit var requestQueue: RequestQueue
 
@@ -34,16 +37,23 @@ class RegisterActivity : AppCompatActivity() {
         etPassword = findViewById(R.id.etPassword)
         etKonfirmasiPassword = findViewById(R.id.etKonfirmasiPassword)
         btnRegister = findViewById(R.id.btnRegister)
+        tvLoginLink = findViewById(R.id.tvLoginLink)
 
         // Inisialisasi Volley
         requestQueue = Volley.newRequestQueue(this)
 
-        // Penyesuaian padding (opsional)
-        val rootLayout = findViewById<androidx.constraintlayout.widget.ConstraintLayout>(R.id.cardRegister).rootView
-        ViewCompat.setOnApplyWindowInsetsListener(rootLayout) { v, insets ->
+        // Penyesuaian padding untuk status bar
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(android.R.id.content)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
+        }
+
+        // Event klik untuk link "Sudah punya akun? Login!"
+        tvLoginLink.setOnClickListener {
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+            finish()
         }
 
         // Aksi tombol register
@@ -53,13 +63,27 @@ class RegisterActivity : AppCompatActivity() {
             val konfirmasiPassword = etKonfirmasiPassword.text.toString().trim()
 
             // Validasi input
-            if (nama.isEmpty() || password.isEmpty() || konfirmasiPassword.isEmpty()) {
-                Toast.makeText(this, "Semua field wajib diisi!", Toast.LENGTH_SHORT).show()
+            if (nama.isEmpty()) {
+                etNama.error = "Nama tidak boleh kosong"
+                etNama.requestFocus()
+                return@setOnClickListener
+            }
+
+            if (password.isEmpty()) {
+                etPassword.error = "Password tidak boleh kosong"
+                etPassword.requestFocus()
+                return@setOnClickListener
+            }
+
+            if (konfirmasiPassword.isEmpty()) {
+                etKonfirmasiPassword.error = "Konfirmasi password tidak boleh kosong"
+                etKonfirmasiPassword.requestFocus()
                 return@setOnClickListener
             }
 
             if (password != konfirmasiPassword) {
                 etKonfirmasiPassword.error = "Konfirmasi password tidak cocok!"
+                etKonfirmasiPassword.requestFocus()
                 return@setOnClickListener
             }
 
@@ -80,7 +104,9 @@ class RegisterActivity : AppCompatActivity() {
 
                     if (success == 1) {
                         Toast.makeText(this, "Registrasi berhasil! Silakan login.", Toast.LENGTH_SHORT).show()
-                        finish() // Kembali ke halaman login
+                        // Setelah berhasil, langsung ke halaman login
+                        startActivity(Intent(this, LoginActivity::class.java))
+                        finish()
                     } else {
                         Toast.makeText(this, "Registrasi gagal, nama sudah digunakan.", Toast.LENGTH_SHORT).show()
                     }

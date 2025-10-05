@@ -3,6 +3,7 @@ package com.example.arto
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -21,6 +22,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var etNama: TextInputEditText
     private lateinit var etPassword: TextInputEditText
     private lateinit var btnLogin: Button
+    private lateinit var tvRegisterLink: TextView
 
     private lateinit var requestQueue: RequestQueue
 
@@ -29,16 +31,17 @@ class LoginActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_login)
 
-        // Inisialisasi view dari layout
+        // Inisialisasi view
         etNama = findViewById(R.id.etNama)
         etPassword = findViewById(R.id.etPassword)
         btnLogin = findViewById(R.id.btnLogin)
+        tvRegisterLink = findViewById(R.id.tvregisterlink)
 
-        // Inisialisasi Volley RequestQueue
+        // Inisialisasi Volley
         requestQueue = Volley.newRequestQueue(this)
 
-        // Penyesuaian untuk layout utama (optional)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.cardLogin)) { v, insets ->
+        // Penyesuaian tampilan agar tidak tertutup status bar
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(android.R.id.content)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
@@ -62,6 +65,12 @@ class LoginActivity : AppCompatActivity() {
             }
 
             loginUser(nama, password)
+        }
+
+        // 🔹 Tambahkan ini → klik teks “Registrasi” akan berpindah ke RegisterActivity
+        tvRegisterLink.setOnClickListener {
+            val intent = Intent(this, RegisterActivity::class.java)
+            startActivity(intent)
         }
     }
 
@@ -88,14 +97,11 @@ class LoginActivity : AppCompatActivity() {
 
                         Toast.makeText(this, "Login berhasil! Selamat datang, $namaUser", Toast.LENGTH_SHORT).show()
 
-                        // Pindah ke halaman utama
                         startActivity(Intent(this, MainActivity::class.java))
                         finish()
-
                     } else {
                         Toast.makeText(this, "Nama atau password salah!", Toast.LENGTH_SHORT).show()
                     }
-
                 } catch (e: Exception) {
                     e.printStackTrace()
                     Toast.makeText(this, "Kesalahan saat membaca data!", Toast.LENGTH_SHORT).show()
