@@ -96,6 +96,7 @@ class BudgetRepository(context: Context) {
             try {
 
                 val response = apiService.updateBudget(id, budget)
+                Log.d(TAG, "Response code: ${response.code()}")
 
                 if (response.isSuccessful) {
                     val updated = response.body() ?: throw Exception("Failed to update budget")
@@ -105,6 +106,8 @@ class BudgetRepository(context: Context) {
                     val errorBody = response.errorBody()?.string()
                     val error =
                         "API Error: ${response.code()} - ${response.message()} - Body: $errorBody"
+                    Log.e(TAG, error)
+                    Log.e(TAG, "=== updateBudget FAILED ===")
                     throw Exception(error)
                 }
             } catch (e: Exception) {
@@ -116,6 +119,8 @@ class BudgetRepository(context: Context) {
     suspend fun updateBudgetAmount(id: Int, newAmount: Int): BudgetItem =
         withContext(Dispatchers.IO) {
             try {
+
+
                 val amountMap = mapOf("amount" to newAmount)
 
                 val response = apiService.updateBudgetAmount(id, amountMap)
