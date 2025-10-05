@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Initial Balance -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_wallet_balance"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:hint="Saldo Awal"
+            app:prefixText="Rp "
+            app:startIconDrawable="@drawable/ic_money_24">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_wallet_balance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:maxLines="1"
+                android:textSize="14sp"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Account Number -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_wallet_number"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:hint="Nomor Rekening/HP"
+            app:startIconDrawable="@drawable/ic_credit_card_24">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_wallet_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:maxLines="1"
+                android:textSize="14sp"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Wallet Type Selection -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:text="Pilih Jenis Wallet"
+            android:textColor="@color/md_theme_primary"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            />
+
+        <!-- Wallet Type Tabs -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="2dp">
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tab_wallet_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:tabIndicatorColor="@color/md_theme_primary"
+                app:tabSelectedTextColor="@color/md_theme_primary"
+                app:tabTextColor="@color/md_theme_outline">
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Bank" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="E-Wallet" />
+
+            </com.google.android.material.tabs.TabLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Provider Selection Grid with Fixed Height -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_wallet_providers"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginBottom="24dp"
+            android:nestedScrollingEnabled="true"
+            android:overScrollMode="always" />
+
+    </LinearLayout>
+
+</ScrollView>

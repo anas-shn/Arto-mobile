@@ -3,28 +3,35 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/navigation_home"
+    >
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.example.arto.ui.home.HomeFragment"
-        android:label="Home"
-        tools:layout="@layout/fragment_home" />
+        android:name="com.example.arto.ui.home.fragment.HomeFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_summary"
+            app:destination="@id/navigation_summary" />
+
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_budget"
-        android:name="com.example.arto.ui.budget.BudgetFragment"
+        android:name="com.example.arto.ui.budget.fragment.BudgetFragment"
         android:label="@string/title_budget"
         tools:layout="@layout/fragment_budget" />
 
     <fragment
         android:id="@+id/navigation_summary"
-        android:name="com.example.arto.ui.summary.SummaryFragment"
+        android:name="com.example.arto.ui.summary.fragment.SummaryFragment"
         android:label="@string/title_summary"
         tools:layout="@layout/fragment_summary" />
+
     <fragment
-        android:id="@+id/navigation_account"
-        android:name="com.example.arto.ui.account.AccountFragment"
-        android:label="@string/title_account"
-        tools:layout="@layout/fragment_account" />
+        android:id="@+id/navigation_transaction"
+        android:name="com.example.arto.ui.transaction.fragment.TransactionFragment"
+        android:label="@string/nav_tambah"
+        tools:layout="@layout/fragment_transaction" />
 </navigation>
