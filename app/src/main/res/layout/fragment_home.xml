@@ -8,7 +8,7 @@
     android:fitsSystemWindows="true"
     tools:context=".ui.home.fragment.HomeFragment">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:fillViewport="true"
@@ -257,7 +257,7 @@
                 tools:listitem="@layout/transaction_layout" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </LinearLayout>
+    </ScrollView>
 
     <!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
     <!--        android:id="@+id/add_trx"-->
