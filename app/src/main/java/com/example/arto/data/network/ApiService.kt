@@ -1,15 +1,14 @@
 package com.example.arto.data.network
 
+import com.example.arto.data.model.AuthResponse
 import com.example.arto.data.model.BudgetItem
+import com.example.arto.data.model.LoginRequest
+import com.example.arto.data.model.LoginResponse
+import com.example.arto.data.model.RegisterRequest
 import com.example.arto.data.model.TransactionItem
 import com.example.arto.data.model.WalletItem
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.DELETE
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.PUT
-import retrofit2.http.Path
+import retrofit2.http.*
 
 interface ApiService {
     @GET("wallets")
@@ -41,7 +40,7 @@ interface ApiService {
     @PUT("203c3219-5089-405b-8704-3718f7158220/budgets/{id}")
     suspend fun updateBudget(@Path("id") id: Int, @Body budget: BudgetItem): Response<BudgetItem>
 
-    @PUT("2http://localhost:5678/webhook/899eae30-6f34-4b43-a671-4215dc97fecc/{id}/amount")
+    @PUT("899eae30-6f34-4b43-a671-4215dc97fecc/budgets/{id}/amount")
     suspend fun updateBudgetAmount(
         @Path("id") id: Int,
         @Body amount: Map<String, Int>
@@ -57,5 +56,13 @@ interface ApiService {
 
     @POST("transactions")
     suspend fun createTransaction(@Body transaction: TransactionItem): Response<TransactionItem>
+
+        // === AUTH ===
+    @POST("login")
+    suspend fun login(@Body request: LoginRequest): Response<List<LoginResponse>>
+
+    @POST("register")
+    suspend fun register(@Body request: RegisterRequest): Response<AuthResponse>
+
 
 }

@@ -5,13 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/budget_parent"
-    tools:context=".ui.budget.fragment.BudgetFragment"
-    android:layout_marginBottom="@dimen/bottom_nav_offset">
+    android:fitsSystemWindows="true"
+    tools:context=".ui.budget.fragment.BudgetFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp">
+        android:layout_height="match_parent"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="56dp">
         <LinearLayout
             android:id="@+id/budget_title"
             android:layout_width="match_parent"

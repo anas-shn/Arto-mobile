@@ -66,7 +66,7 @@ class WalletSelectionAdapter(
 
                 root.setOnClickListener {
                     val oldPosition = selectedPosition
-                    selectedPosition = bindingAdapterPosition
+                    selectedPosition = adapterPosition
 
                     if (oldPosition != -1) {
                         notifyItemChanged(oldPosition)

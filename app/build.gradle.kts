@@ -1,11 +1,3 @@
-import java.util.Properties
-
-val properties = Properties()
-val localPropertiesFile = rootProject.file("local.properties")
-if (localPropertiesFile.exists()) {
-    properties.load(localPropertiesFile.inputStream())
-}
-
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -22,7 +14,6 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -35,19 +26,15 @@ android {
             )
         }
     }
-
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
-
     kotlinOptions {
         jvmTarget = "11"
     }
-
     buildFeatures {
         viewBinding = true
-        buildConfig = true
     }
 }
 
@@ -64,32 +51,13 @@ dependencies {
     implementation(libs.androidx.fragment.ktx)
     implementation(libs.androidx.cardview)
     implementation(libs.androidx.fragment)
-    implementation(libs.androidx.recyclerview)
-//implementation("com.google.android.material:material:1.13.0")
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
 //    retrofit
     implementation("com.squareup.retrofit2:retrofit:3.0.0")
     implementation("com.squareup.retrofit2:converter-gson:3.0.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
-//    implementation(libs.androidx.room.ktx)
-
-    // Testing
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
 
     implementation("io.github.mckrpk:AnimatedProgressBar:1.0.0")
-
-    // Supabase - Gunakan versi yang sama
-//    implementation("io.github.jan-tennert.supabase:postgrest-kt:3.2.4")
-//    implementation("io.github.jan-tennert.supabase:storage-kt:3.2.4")
-//    implementation("io.github.jan-tennert.supabase:gotrue-kt:2.6.1")
-//    implementation("io.ktor:ktor-client-android:3.3.0")
-//    implementation("io.ktor:ktor-client-core:3.3.0")
-//    implementation("io.ktor:ktor-utils:3.3.0")
-//    implementation("io.github.jan-tennert.supabase:serializer-moshi:3.2.4")
-//
-//    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0")
-//
-//    // Coroutines
-//    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2")
 }

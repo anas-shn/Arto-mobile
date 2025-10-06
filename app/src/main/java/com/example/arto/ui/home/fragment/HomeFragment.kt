@@ -1,6 +1,7 @@
 package com.example.arto.ui.home.fragment
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,11 +10,14 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.arto.R
+import com.example.arto.data.local.SessionManager
 import com.example.arto.data.model.WalletItem
 import com.example.arto.databinding.FragmentHomeBinding
 import com.example.arto.databinding.WalletModalBinding
+import com.example.arto.ui.auth.LoginActivity
 import com.example.arto.ui.home.viewmodel.HomeViewModel
 import com.example.arto.ui.home.adapter.WalletAdapter
 import com.example.arto.ui.common.utils.FormatCurenrency
@@ -31,6 +35,7 @@ class HomeFragment : Fragment() {
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var walletAdapter: WalletAdapter
     private lateinit var transactionAdapter: TransactionAdapter
+    private lateinit var sessionManager: SessionManager
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,6 +43,9 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
+
+        // Initialize SessionManager
+        sessionManager = SessionManager(requireContext())
 
         // Initialize ViewModel
         homeViewModel = ViewModelProvider(this)[HomeViewModel::class.java]
@@ -228,6 +236,11 @@ class HomeFragment : Fragment() {
             }
         }
 
+        // Observe user name
+        homeViewModel.name.observe(viewLifecycleOwner) { name ->
+            binding.nameUser.text = name
+        }
+
         // Welcome text
         homeViewModel.text.observe(viewLifecycleOwner) { text ->
             binding.welcomeText.text = text
@@ -268,20 +281,49 @@ class HomeFragment : Fragment() {
 
     private fun setupClickListeners() {
         // See all wallets - Navigate to wallet list
-        binding.seeAllWallets.setOnClickListener {
-            Toast.makeText(context, "Navigate to Wallet List", Toast.LENGTH_SHORT).show()
-        }
 
         // See all transactions - Navigate to transaction list
         binding.seeAllTransactions.setOnClickListener {
-            Toast.makeText(context, "Navigate to Transaction List", Toast.LENGTH_SHORT).show()
-        }
+            // Navigate to summary with proper pop behavior
+            findNavController().navigate(
+                R.id.navigation_summary,
+                null,
+                androidx.navigation.NavOptions.Builder()
+                    .setLaunchSingleTop(true)
+                    .build()
+            )
+       }
 
 
-        // Notification button
-        binding.notificationBtn.setOnClickListener {
-            Toast.makeText(context, "Notifications", Toast.LENGTH_SHORT).show()
+        // Logout button
+        binding.btnLogout.setOnClickListener {
+            showLogoutConfirmation()
         }
+    }
+
+    private fun showLogoutConfirmation() {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Logout")
+            .setMessage("Apakah Anda yakin ingin keluar?")
+            .setPositiveButton("Logout") { _, _ ->
+                performLogout()
+            }
+            .setNegativeButton("Batal", null)
+            .show()
+    }
+
+    private fun performLogout() {
+        // Clear session
+        sessionManager.clearSession()
+        
+        // Show toast
+        Toast.makeText(context, "Logout berhasil", Toast.LENGTH_SHORT).show()
+        
+        // Navigate to LoginActivity
+        val intent = Intent(requireActivity(), LoginActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
+        requireActivity().finish()
     }
 
     private fun showLoading() {
@@ -290,8 +332,8 @@ class HomeFragment : Fragment() {
 
         // Disable interactions
 //        binding.addTrx.isEnabled = false
-        binding.notificationBtn.isEnabled = false
-        binding.seeAllWallets.isEnabled = false
+        binding.btnLogout.isEnabled = false
+//        binding.seeAllWallets.isEnabled = false
         binding.seeAllTransactions.isEnabled = false
     }
 
@@ -301,8 +343,8 @@ class HomeFragment : Fragment() {
 
         // Enable interactions
 //        binding.addTrx.isEnabled = true
-        binding.notificationBtn.isEnabled = true
-        binding.seeAllWallets.isEnabled = true
+        binding.btnLogout.isEnabled = true
+//        binding.seeAllWallets.isEnabled = true
         binding.seeAllTransactions.isEnabled = true
     }
 

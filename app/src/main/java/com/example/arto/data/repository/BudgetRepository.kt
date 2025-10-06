@@ -126,8 +126,20 @@ class BudgetRepository(context: Context) {
                 val response = apiService.updateBudgetAmount(id, amountMap)
 
                 if (response.isSuccessful) {
-                    val updated = response.body() ?: throw Exception("No response body")
-                    return@withContext updated
+                    // Handle empty response body
+                    val updated = try {
+                        response.body()
+                    } catch (e: Exception) {
+                        null
+                    }
+                    
+                    if (updated != null) {
+                        return@withContext updated
+                    } else {
+                        // Fetch the updated budget
+                        val fetchedBudget = getBudgetById(id)
+                        return@withContext fetchedBudget
+                    }
                 } else {
                     val errorBody = response.errorBody()?.string()
                     val error =
@@ -135,6 +147,12 @@ class BudgetRepository(context: Context) {
                     throw Exception(error)
                 }
 
+            } catch (e: com.google.gson.JsonSyntaxException) {
+                val fetchedBudget = getBudgetById(id)
+                return@withContext fetchedBudget
+            } catch (e: java.io.EOFException) {
+                val fetchedBudget = getBudgetById(id)
+                return@withContext fetchedBudget
             } catch (e: Exception) {
                 throw Exception("Failed to update budget amount: ${e.message}")
             }

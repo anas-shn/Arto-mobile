@@ -1,6 +1,5 @@
 package com.example.arto.ui.home.adapter
 
-import android.annotation.SuppressLint
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -29,7 +28,6 @@ class TransactionAdapter(
     }
 
     override fun onBindViewHolder(holder: TransactionViewHolder, position: Int) {
-        Log.d("TransactionAdapter", "Binding item at position $position")
         holder.bind(getItem(position))
     }
 
@@ -38,6 +36,8 @@ class TransactionAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(transaction: TransactionItem) {
             with(binding) {
+
+
                 tvTransactionTitle.text = transaction.title ?: ""
                 // Format amount
                 val formattedAmount = FormatCurenrency.format(transaction.amount)
@@ -49,18 +49,38 @@ class TransactionAdapter(
 
                 // Set color based on type
                 if (transaction.type.equals("income", ignoreCase = true)) {
+                    ivTypeTranscation.setImageResource(getIconByType(transaction.type))
+                    // Set green color for income
+                    ivTypeTranscation.setColorFilter(
+                        binding.root.context.getColor(android.R.color.holo_green_dark),
+                        android.graphics.PorterDuff.Mode.SRC_IN
+                    )
                     tvTransactionAmount.setTextColor(
                         binding.root.context.getColor(android.R.color.holo_green_dark)
                     )
                 } else {
+                    ivTypeTranscation.setImageResource(getIconByType(transaction.type))
+                    // Set red color for outcome
+                    ivTypeTranscation.setColorFilter(
+                        binding.root.context.getColor(android.R.color.holo_red_dark),
+                        android.graphics.PorterDuff.Mode.SRC_IN
+                    )
                     tvTransactionAmount.setTextColor(
-                        binding.root.context.getColor(com.example.arto.R.color.md_theme_error)
+                        binding.root.context.getColor(android.R.color.holo_red_dark)
                     )
                 }
                 tvTransactionDate.text = FormatDate.dateDMY(transaction.created_at)
             }
         }
 
+    }
+
+    fun getIconByType(type: String): Int {
+        return when (type.lowercase()) {
+            "income" -> com.example.arto.R.drawable.ic_income_24
+            "outcome" -> com.example.arto.R.drawable.ic_outcome_24
+            else -> com.example.arto.R.drawable.ic_money_24
+        }
     }
 
     class TransactionDiffCallback : DiffUtil.ItemCallback<TransactionItem>() {
